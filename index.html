@@ -78,6 +78,34 @@
             transform: translateY(0);
         }
 
+        .rules-btn {
+            position: fixed;
+            top: 20px;
+            right: 180px;
+            background: rgba(100,150,255,0.3);
+            color: white;
+            border: 2px solid rgba(100,150,255,0.5);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 600;
+            z-index: 100;
+            touch-action: manipulation;
+        }
+
+        .rules-btn:hover {
+            background: rgba(100,150,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .rules-btn:active {
+            transform: translateY(0);
+        }
+
         .reset-btn {
             position: fixed;
             top: 20px;
@@ -476,6 +504,16 @@
             border: 2px solid rgba(0,255,0,0.5);
         }
 
+        .shop-item.session-item {
+            background: rgba(255,215,0,0.2);
+            border: 2px solid rgba(255,215,0,0.4);
+        }
+
+        .shop-item.session-item.owned {
+            background: rgba(255,215,0,0.3);
+            border: 2px solid rgba(255,215,0,0.6);
+        }
+
         .item-info {
             flex: 1;
         }
@@ -619,6 +657,12 @@
                 padding: 0.6rem 1rem;
                 font-size: 1rem;
             }
+            .rules-btn {
+                top: 10px;
+                right: 140px;
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+            }
             .reset-btn {
                 top: 10px;
                 left: 10px;
@@ -660,7 +704,8 @@
 </head>
 <body>
     <button class="shop-btn" onclick="openShop()" id="shopButton">🛒 Shop</button>
-    <button class="reset-btn" onclick="confirmReset(event)">🔄 Reset</button>
+    <button class="rules-btn" onclick="openRules()" id="rulesButton" data-ca="📖 Regles" data-en="📖 Rules" data-es="📖 Reglas" data-ru="📖 Правила">📖 Rules</button>
+    <button class="reset-btn" onclick="confirmReset(event)" id="resetButton" data-ca="🔄 Restablir" data-en="🔄 Reset" data-es="🔄 Reiniciar" data-ru="🔄 Сброс">🔄 Reset</button>
     <a href="https://github.com/juulcatsite/juulcat" target="_blank" rel="noopener noreferrer" class="github-btn">
         <svg class="github-logo" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
@@ -678,45 +723,59 @@
         </div>
         <div class="stats-container">
             <div class="stat-box" id="sessionBox">
-                <div class="stat-label" data-ca="Calades de sessió" data-en="Session Puffs">Session Puffs</div>
+                <div class="stat-label" data-ca="Calades de sessió" data-en="Session Puffs" data-es="Caladas de sesión" data-ru="Затяжки сессии">Session Puffs</div>
                 <div class="stat-value" id="sessionCount">0</div>
                 <div class="multiplier-indicator" id="multiplierDisplay"></div>
             </div>
             <div class="stat-box">
-                <div class="stat-label" data-ca="Calades totals" data-en="Total Puffs">Total Puffs</div>
+                <div class="stat-label" data-ca="Calades totals" data-en="Total Puffs" data-es="Caladas totales" data-ru="Всего затяжек">Total Puffs</div>
                 <div class="stat-value" id="totalCount">0</div>
             </div>
         </div>
-        <div class="subtitle" id="subtitle" data-ca="fes clic a qualsevol lloc per fumar el juul ⚡" data-en="click anywhere to rip the juul ⚡">click anywhere to rip the juul ⚡</div>
-        <div class="warning" id="warning" data-ca="⚠️ CLICS SOSPITOSOS DETECTATS ⚠️" data-en="⚠️ SUSPICIOUS CLICKING DETECTED ⚠️">⚠️ SUSPICIOUS CLICKING DETECTED ⚠️</div>
+        <div class="subtitle" id="subtitle" data-ca="fes clic a qualsevol lloc per fumar el juul ⚡" data-en="click anywhere to rip the juul ⚡" data-es="haz clic en cualquier lugar para fumar el juul ⚡" data-ru="нажмите в любом месте, чтобы курить juul ⚡">click anywhere to rip the juul ⚡</div>
+        <div class="warning" id="warning" data-ca="⚠️ CLICS SOSPITOSOS DETECTATS ⚠️" data-en="⚠️ SUSPICIOUS CLICKING DETECTED ⚠️" data-es="⚠️ CLICS SOSPECHOSOS DETECTADOS ⚠️" data-ru="⚠️ ОБНАРУЖЕНЫ ПОДОЗРИТЕЛЬНЫЕ КЛИКИ ⚠️">⚠️ SUSPICIOUS CLICKING DETECTED ⚠️</div>
     </div>
 
     <div class="lang-switcher">
         <button class="lang-btn" data-lang="ca" onclick="switchLanguage('ca')">Català</button>
         <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">English</button>
+        <button class="lang-btn" data-lang="es" onclick="switchLanguage('es')">Español</button>
+        <button class="lang-btn" data-lang="ru" onclick="switchLanguage('ru')">Русский</button>
     </div>
 
     <div class="modal" id="shopModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" data-ca="🛒 Millores" data-en="🛒 Upgrades">🛒 Upgrades</h2>
+                <h2 class="modal-title" data-ca="🛒 Millores" data-en="🛒 Upgrades" data-es="🛒 Mejoras" data-ru="🛒 Улучшения">🛒 Upgrades</h2>
                 <button class="close-btn" onclick="closeShop()">×</button>
             </div>
             <div style="color: white; text-align: center; margin-bottom: 1.5rem; font-size: 1.2rem;">
-                <span data-ca="Les teves calades:" data-en="Your Puffs:">Your Puffs:</span> <span id="shopPuffs" style="color: #ffff00; font-weight: bold;">0</span>
+                <span data-ca="Les teves calades:" data-en="Your Puffs:" data-es="Tus Caladas:" data-ru="Ваши затяжки:">Your Puffs:</span> <span id="shopPuffs" style="color: #ffff00; font-weight: bold;">0</span>
             </div>
             <div class="shop-items" id="shopItems"></div>
         </div>
     </div>
 
-    <div class="game-over" id="gameOver">
-        <div class="game-over-text" data-ca="💥 ENXAMPAT! 💥" data-en="💥 BUSTED! 💥">💥 BUSTED! 💥</div>
-        <div class="final-stats">
-            <div style="font-size: 2rem; margin-bottom: 1rem;" data-ca="🤖 AUTOCLICKER DETECTAT 🤖" data-en="🤖 AUTOCLICKER DETECTED 🤖">🤖 AUTOCLICKER DETECTED 🤖</div>
-            <div><span data-ca="Puntuació final:" data-en="Final Score:">Final Score:</span> <span id="finalScore">0</span> <span data-ca="calades" data-en="puffs">puffs</span></div>
-            <div style="margin-top: 1rem;" data-ca="Juga net la propera vegada!" data-en="Play fair next time!">Play fair next time!</div>
+    <div class="modal" id="rulesModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 class="modal-title">📖 <span data-ca="Regles del Joc" data-en="Game Rules" data-es="Reglas del Juego" data-ru="Правила игры">Game Rules</span></h2>
+                <button class="close-btn" onclick="closeRules()">×</button>
+            </div>
+            <div id="rulesContent" style="color: white; line-height: 1.8; text-align: left;">
+                <!-- Content populated by JavaScript -->
+            </div>
         </div>
-        <button class="restart-btn" onclick="restart()" data-ca="Torna a provar (Legítimament) 🔄" data-en="Try Again (Legitimately) 🔄">Try Again (Legitimately) 🔄</button>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-text" data-ca="💥 ENXAMPAT! 💥" data-en="💥 BUSTED! 💥" data-es="💥 ¡ATRAPADO! 💥" data-ru="💥 ПОЙМАН! 💥">💥 BUSTED! 💥</div>
+        <div class="final-stats">
+            <div style="font-size: 2rem; margin-bottom: 1rem;" data-ca="🤖 AUTOCLICKER DETECTAT 🤖" data-en="🤖 AUTOCLICKER DETECTED 🤖" data-es="🤖 AUTOCLICKER DETECTADO 🤖" data-ru="🤖 АВТОКЛИКЕР ОБНАРУЖЕН 🤖">🤖 AUTOCLICKER DETECTED 🤖</div>
+            <div><span data-ca="Puntuació final:" data-en="Final Score:" data-es="Puntuación final:" data-ru="Финальный счёт:">Final Score:</span> <span id="finalScore">0</span> <span data-ca="calades" data-en="puffs" data-es="caladas" data-ru="затяжек">puffs</span></div>
+            <div style="margin-top: 1rem;" data-ca="Juga net la propera vegada!" data-en="Play fair next time!" data-es="¡Juega limpio la próxima vez!" data-ru="Играй честно в следующий раз!">Play fair next time!</div>
+        </div>
+        <button class="restart-btn" onclick="restart()" data-ca="Torna a provar (Legítimament) 🔄" data-en="Try Again (Legitimately) 🔄" data-es="Intentar de nuevo (Legítimamente) 🔄" data-ru="Попробовать снова (Честно) 🔄">Try Again (Legitimately) 🔄</button>
     </div>
 
     <script>
@@ -726,6 +785,8 @@
         const translations = {
             ca: {
                 shopButton: '🛒 Botiga',
+                resetButton: '🔄 Restablir',
+                rulesButton: '📖 Regles',
                 multiplierActive: 'x multiplicador actiu',
                 shopPuffsLabel: 'Les teves calades:',
                 modalTitle: '🛒 Millores',
@@ -755,10 +816,97 @@
                     { name: 'Multiplicador 250x', desc: 'INSANITAT!', price: 2500000 },
                     { name: 'Multiplicador 500x', desc: 'MONSTRUÓS!', price: 10000000 },
                     { name: 'Multiplicador 1000x', desc: 'LLEGENDARI! MIL VEGADES!', price: 50000000 }
+                ],
+                sessionItems: [
+                    { name: 'Multiplicador de Sessió 3x', desc: '¡Multiplica TOT per 3!', price: 5000000 },
+                    { name: 'Multiplicador de Sessió 5x', desc: '¡Multiplica TOT per 5!', price: 25000000 },
+                    { name: 'Multiplicador de Sessió 10x', desc: '¡MULTIPLICA TOT PER 10!', price: 100000000 }
+                ]
+            },
+            es: {
+                shopButton: '🛒 Tienda',
+                resetButton: '🔄 Reiniciar',
+                rulesButton: '📖 Reglas',
+                multiplierActive: 'x multiplicador activo',
+                shopPuffsLabel: 'Tus Caladas:',
+                modalTitle: '🛒 Mejoras',
+                owned: 'Comprado ✓',
+                buy: 'Comprar',
+                locked: 'Bloqueado 🔒',
+                requiresPrevious: 'Requiere mejora anterior',
+                puffsUnit: 'caladas',
+                purchased: 'Comprado',
+                milestones: {
+                    50: '¡Cincuenta! 💯',
+                    100: '¡TRES DÍGITOS! 🎉',
+                    420: '¡GENIAL! 😎',
+                    500: '¡QUINIENTOS! 🔥',
+                    1000: '¡MIL! 🚀'
+                },
+                warningText: '⚠️ CLICS SOSPECHOSOS:',
+                strikesLeft: 'intentos restantes ⚠️',
+                shopItems: [
+                    { name: 'Multiplicador 2x', desc: 'Duplica las caladas por clic', price: 100 },
+                    { name: 'Multiplicador 3x', desc: 'Triplica las caladas por clic', price: 300 },
+                    { name: 'Multiplicador 5x', desc: '¡5 caladas por clic!', price: 1000 },
+                    { name: 'Multiplicador 10x', desc: '¡MEGA CALADAS!', price: 5000 },
+                    { name: 'Multiplicador 25x', desc: '¡25 caladas por clic!', price: 25000 },
+                    { name: 'Multiplicador 50x', desc: '¡50 caladas por clic!', price: 100000 },
+                    { name: 'Multiplicador 100x', desc: '¡CIEN CALADAS!', price: 500000 },
+                    { name: 'Multiplicador 250x', desc: '¡LOCURA!', price: 2500000 },
+                    { name: 'Multiplicador 500x', desc: '¡MONSTRUOSO!', price: 10000000 },
+                    { name: 'Multiplicador 1000x', desc: '¡LEGENDARIO! ¡MIL VECES!', price: 50000000 }
+                ],
+                sessionItems: [
+                    { name: 'Multiplicador de Sesión 3x', desc: '¡Multiplica TODO por 3!', price: 5000000 },
+                    { name: 'Multiplicador de Sesión 5x', desc: '¡Multiplica TODO por 5!', price: 25000000 },
+                    { name: 'Multiplicador de Sesión 10x', desc: '¡MULTIPLICA TODO POR 10!', price: 100000000 }
+                ]
+            },
+            ru: {
+                shopButton: '🛒 Магазин',
+                resetButton: '🔄 Сброс',
+                rulesButton: '📖 Правила',
+                multiplierActive: 'x множитель активен',
+                shopPuffsLabel: 'Ваши затяжки:',
+                modalTitle: '🛒 Улучшения',
+                owned: 'Куплено ✓',
+                buy: 'Купить',
+                locked: 'Заблокировано 🔒',
+                requiresPrevious: 'Требуется предыдущее улучшение',
+                puffsUnit: 'затяжек',
+                purchased: 'Куплено',
+                milestones: {
+                    50: 'Пятьдесят! 💯',
+                    100: 'ТРИ ЦИФРЫ! 🎉',
+                    420: 'ОТЛИЧНО! 😎',
+                    500: 'ПЯТЬСОТ! 🔥',
+                    1000: 'ТЫСЯЧА! 🚀'
+                },
+                warningText: '⚠️ ПОДОЗРИТЕЛЬНЫЕ КЛИКИ:',
+                strikesLeft: 'попыток осталось ⚠️',
+                shopItems: [
+                    { name: 'Множитель 2x', desc: 'Удвоить затяжки за клик', price: 100 },
+                    { name: 'Множитель 3x', desc: 'Утроить затяжки за клик', price: 300 },
+                    { name: 'Множитель 5x', desc: '5 затяжек за клик!', price: 1000 },
+                    { name: 'Множитель 10x', desc: 'МЕГА ЗАТЯЖКИ!', price: 5000 },
+                    { name: 'Множитель 25x', desc: '25 затяжек за клик!', price: 25000 },
+                    { name: 'Множитель 50x', desc: '50 затяжек за клик!', price: 100000 },
+                    { name: 'Множитель 100x', desc: 'СТО ЗАТЯЖЕК!', price: 500000 },
+                    { name: 'Множитель 250x', desc: 'БЕЗУМИЕ!', price: 2500000 },
+                    { name: 'Множитель 500x', desc: 'ЧУДОВИЩНО!', price: 10000000 },
+                    { name: 'Множитель 1000x', desc: 'ЛЕГЕНДАРНО! ТЫСЯЧА РАЗ!', price: 50000000 }
+                ],
+                sessionItems: [
+                    { name: 'Множитель Сессии 3x', desc: 'Умножает ВСЁ на 3!', price: 5000000 },
+                    { name: 'Множитель Сессии 5x', desc: 'Умножает ВСЁ на 5!', price: 25000000 },
+                    { name: 'Множитель Сессии 10x', desc: 'УМНОЖАЕТ ВСЁ НА 10!', price: 100000000 }
                 ]
             },
             en: {
                 shopButton: '🛒 Shop',
+                resetButton: '🔄 Reset',
+                rulesButton: '📖 Rules',
                 multiplierActive: 'x multiplier active',
                 shopPuffsLabel: 'Your Puffs:',
                 modalTitle: '🛒 Upgrades',
@@ -788,6 +936,11 @@
                     { name: '250x Multiplier', desc: 'INSANITY!', price: 2500000 },
                     { name: '500x Multiplier', desc: 'MONSTROUS!', price: 10000000 },
                     { name: '1000x Multiplier', desc: 'LEGENDARY! ONE THOUSAND!', price: 50000000 }
+                ],
+                sessionItems: [
+                    { name: '3x Session Multiplier', desc: 'Multiply EVERYTHING by 3!', price: 5000000 },
+                    { name: '5x Session Multiplier', desc: 'Multiply EVERYTHING by 5!', price: 25000000 },
+                    { name: '10x Session Multiplier', desc: 'MULTIPLY EVERYTHING BY 10!', price: 100000000 }
                 ]
             }
         };
@@ -808,6 +961,12 @@
             
             // Update shop button
             document.getElementById('shopButton').textContent = translations[lang].shopButton;
+            
+            // Update reset button
+            document.getElementById('resetButton').textContent = translations[lang].resetButton;
+            
+            // Update rules button
+            document.getElementById('rulesButton').textContent = translations[lang].rulesButton;
             
             // Update multiplier if active
             updateMultiplierDisplay();
@@ -831,6 +990,7 @@
         let totalCount = 0;
         let gameActive = true;
         let multiplier = 1;
+        let sessionMultiplier = 1;
         let ownedUpgrades = [];
         
         // Autoclicker detection
@@ -850,31 +1010,44 @@
 
         // Shop items
         const shopItems = [
-            { id: 'multi2x', multiplier: 2, requires: null },
-            { id: 'multi3x', multiplier: 3, requires: 'multi2x' },
-            { id: 'multi5x', multiplier: 5, requires: 'multi3x' },
-            { id: 'multi10x', multiplier: 10, requires: 'multi5x' },
-            { id: 'multi25x', multiplier: 25, requires: 'multi10x' },
-            { id: 'multi50x', multiplier: 50, requires: 'multi25x' },
-            { id: 'multi100x', multiplier: 100, requires: 'multi50x' },
-            { id: 'multi250x', multiplier: 250, requires: 'multi100x' },
-            { id: 'multi500x', multiplier: 500, requires: 'multi250x' },
-            { id: 'multi1000x', multiplier: 1000, requires: 'multi500x' },
+            { id: 'multi2x', multiplier: 2, requires: null, type: 'base' },
+            { id: 'multi3x', multiplier: 3, requires: 'multi2x', type: 'base' },
+            { id: 'multi5x', multiplier: 5, requires: 'multi3x', type: 'base' },
+            { id: 'multi10x', multiplier: 10, requires: 'multi5x', type: 'base' },
+            { id: 'multi25x', multiplier: 25, requires: 'multi10x', type: 'base' },
+            { id: 'multi50x', multiplier: 50, requires: 'multi25x', type: 'base' },
+            { id: 'multi100x', multiplier: 100, requires: 'multi50x', type: 'base' },
+            { id: 'multi250x', multiplier: 250, requires: 'multi100x', type: 'base' },
+            { id: 'multi500x', multiplier: 500, requires: 'multi250x', type: 'base' },
+            { id: 'multi1000x', multiplier: 1000, requires: 'multi500x', type: 'base' },
+            { id: 'session3x', sessionMultiplier: 3, requires: 'multi250x', type: 'session' },
+            { id: 'session5x', sessionMultiplier: 5, requires: 'session3x', type: 'session' },
+            { id: 'session10x', sessionMultiplier: 10, requires: 'session5x', type: 'session' },
         ];
 
         function updateMultiplier() {
             multiplier = 1;
+            sessionMultiplier = 1;
             for (const item of shopItems) {
                 if (ownedUpgrades.includes(item.id)) {
-                    multiplier = item.multiplier;
+                    if (item.type === 'base') {
+                        multiplier = item.multiplier;
+                    } else if (item.type === 'session') {
+                        sessionMultiplier = item.sessionMultiplier;
+                    }
                 }
             }
             updateMultiplierDisplay();
         }
 
         function updateMultiplierDisplay() {
-            if (multiplier > 1) {
-                multiplierDisplay.textContent = `${multiplier}${translations[currentLang].multiplierActive}`;
+            const totalMult = multiplier * sessionMultiplier;
+            if (totalMult > 1) {
+                let displayText = `${totalMult}${translations[currentLang].multiplierActive}`;
+                if (sessionMultiplier > 1) {
+                    displayText += ` (${multiplier}x × ${sessionMultiplier}x)`;
+                }
+                multiplierDisplay.textContent = displayText;
             } else {
                 multiplierDisplay.textContent = '';
             }
@@ -885,7 +1058,12 @@
             document.getElementById('shopPuffs').textContent = totalCount;
             
             container.innerHTML = shopItems.map((item, index) => {
-                const shopItem = translations[currentLang].shopItems[index];
+                // Determine which translation array to use
+                const isSessionItem = item.type === 'session';
+                const translationIndex = isSessionItem ? index - 10 : index; // Session items start at index 10
+                const translationArray = isSessionItem ? 'sessionItems' : 'shopItems';
+                const shopItem = translations[currentLang][translationArray][translationIndex];
+                
                 const owned = ownedUpgrades.includes(item.id);
                 const canAfford = totalCount >= shopItem.price;
                 const requirementMet = !item.requires || ownedUpgrades.includes(item.requires);
@@ -894,14 +1072,17 @@
                 let buttonText = owned ? translations[currentLang].owned : translations[currentLang].buy;
                 if (!requirementMet) buttonText = translations[currentLang].locked;
                 
+                // Add special styling for session multipliers
+                const itemClass = isSessionItem ? 'shop-item session-item' : 'shop-item';
+                
                 return `
-                    <div class="shop-item ${owned ? 'owned' : ''}">
+                    <div class="${itemClass} ${owned ? 'owned' : ''}">
                         <div class="item-info">
                             <div class="item-name">${shopItem.name}</div>
                             <div class="item-desc">${shopItem.desc}</div>
                             ${!requirementMet ? `<div class="item-desc" style="color: #ff6666;">${translations[currentLang].requiresPrevious}</div>` : ''}
                         </div>
-                        <div class="item-price">${shopItem.price} ${translations[currentLang].puffsUnit}</div>
+                        <div class="item-price">${shopItem.price.toLocaleString()} ${translations[currentLang].puffsUnit}</div>
                         <button class="buy-btn" 
                                 onclick="buyItem('${item.id}')" 
                                 ${!canBuy ? 'disabled' : ''}>
@@ -915,7 +1096,12 @@
         function buyItem(id) {
             const itemIndex = shopItems.findIndex(i => i.id === id);
             const item = shopItems[itemIndex];
-            const shopItem = translations[currentLang].shopItems[itemIndex];
+            
+            // Determine translation array
+            const isSessionItem = item.type === 'session';
+            const translationIndex = isSessionItem ? itemIndex - 10 : itemIndex;
+            const translationArray = isSessionItem ? 'sessionItems' : 'shopItems';
+            const shopItem = translations[currentLang][translationArray][translationIndex];
             
             if (!item) return;
             
@@ -937,6 +1123,130 @@
 
         function closeShop() {
             document.getElementById('shopModal').classList.remove('active');
+        }
+
+        function openRules() {
+            renderRules();
+            document.getElementById('rulesModal').classList.add('active');
+        }
+
+        function closeRules() {
+            document.getElementById('rulesModal').classList.remove('active');
+        }
+
+        function renderRules() {
+            const rulesContent = {
+                en: `
+                    <h3 style="color: #ffff00; margin-bottom: 1rem;">🎮 How to Play</h3>
+                    <p><strong>Click anywhere</strong> or press <strong>Space/Enter</strong> to rip the juul and earn puffs!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">📊 Stats</h3>
+                    <p><strong>Session Puffs:</strong> Puffs in your current session (resets on refresh)</p>
+                    <p><strong>Total Puffs:</strong> All-time cumulative puffs (your currency!)</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🛒 Upgrades</h3>
+                    <p><strong>Base Multipliers:</strong> Increase puffs per click (2x → 1000x)</p>
+                    <p><strong>Session Multipliers (Gold):</strong> Multiply EVERYTHING!</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>3x Session (unlocks at 250x base) = 750 per click</li>
+                        <li>5x Session = 1,250 per click</li>
+                        <li>10x Session = 2,500 per click</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;"><strong>Max Power:</strong> 1000x base × 10x session = <span style="color: #ffff00;">10,000 puffs per click!</span></p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🤖 Anti-Cheat</h3>
+                    <p>Don't try to cheat the system or the cat will explode! 💥</p>
+                    <p>Play fair and you'll be fine. Suspicious behavior = warnings → explosion!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">💡 Tips</h3>
+                    <p>• Upgrades cost Total Puffs, so spend wisely!</p>
+                    <p>• Session multipliers are endgame - save up for them!</p>
+                    <p>• Use Reset to start fresh if you want</p>
+                `,
+                ca: `
+                    <h3 style="color: #ffff00; margin-bottom: 1rem;">🎮 Com jugar</h3>
+                    <p><strong>Fes clic a qualsevol lloc</strong> o prem <strong>Espai/Enter</strong> per fumar el juul i guanyar calades!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">📊 Estadístiques</h3>
+                    <p><strong>Calades de sessió:</strong> Calades de la teva sessió actual (es reinicia)</p>
+                    <p><strong>Calades totals:</strong> Calades acumulades totals (la teva moneda!)</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🛒 Millores</h3>
+                    <p><strong>Multiplicadors base:</strong> Augmenta calades per clic (2x → 1000x)</p>
+                    <p><strong>Multiplicadors de sessió (Or):</strong> Multiplica TOT!</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>3x Sessió (desbloqueja a 250x base) = 750 per clic</li>
+                        <li>5x Sessió = 1.250 per clic</li>
+                        <li>10x Sessió = 2.500 per clic</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;"><strong>Poder màxim:</strong> 1000x base × 10x sessió = <span style="color: #ffff00;">10.000 calades per clic!</span></p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🤖 Anti-trampes</h3>
+                    <p>No intentis fer trampes o el gat explotarà! 💥</p>
+                    <p>Juga net i estaràs bé. Comportament sospitós = advertències → explosió!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">💡 Consells</h3>
+                    <p>• Les millores costen Calades Totals, gasta amb prudència!</p>
+                    <p>• Els multiplicadors de sessió són per al final - estalvia!</p>
+                    <p>• Utilitza Restablir per començar de nou si vols</p>
+                `,
+                es: `
+                    <h3 style="color: #ffff00; margin-bottom: 1rem;">🎮 Cómo jugar</h3>
+                    <p><strong>Haz clic en cualquier lugar</strong> o presiona <strong>Espacio/Enter</strong> para fumar el juul y ganar caladas!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">📊 Estadísticas</h3>
+                    <p><strong>Caladas de sesión:</strong> Caladas en tu sesión actual (se reinicia)</p>
+                    <p><strong>Caladas totales:</strong> Caladas acumuladas totales (¡tu moneda!)</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🛒 Mejoras</h3>
+                    <p><strong>Multiplicadores base:</strong> Aumenta caladas por clic (2x → 1000x)</p>
+                    <p><strong>Multiplicadores de sesión (Oro):</strong> ¡Multiplica TODO!</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>3x Sesión (desbloquea en 250x base) = 750 por clic</li>
+                        <li>5x Sesión = 1,250 por clic</li>
+                        <li>10x Sesión = 2,500 por clic</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;"><strong>Poder máximo:</strong> 1000x base × 10x sesión = <span style="color: #ffff00;">¡10,000 caladas por clic!</span></p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🤖 Anti-trampas</h3>
+                    <p>¡No intentes hacer trampa o el gato explotará! 💥</p>
+                    <p>Juega limpio y estarás bien. Comportamiento sospechoso = advertencias → ¡explosión!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">💡 Consejos</h3>
+                    <p>• Las mejoras cuestan Caladas Totales, ¡gasta con cuidado!</p>
+                    <p>• Los multiplicadores de sesión son para el final - ¡ahorra!</p>
+                    <p>• Usa Reiniciar para empezar de nuevo si quieres</p>
+                `,
+                ru: `
+                    <h3 style="color: #ffff00; margin-bottom: 1rem;">🎮 Как играть</h3>
+                    <p><strong>Нажмите в любом месте</strong> или нажмите <strong>Пробел/Enter</strong>, чтобы курить juul и зарабатывать затяжки!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">📊 Статистика</h3>
+                    <p><strong>Затяжки сессии:</strong> Затяжки в текущей сессии (сбрасывается)</p>
+                    <p><strong>Всего затяжек:</strong> Общие накопленные затяжки (ваша валюта!)</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🛒 Улучшения</h3>
+                    <p><strong>Базовые множители:</strong> Увеличивают затяжки за клик (2x → 1000x)</p>
+                    <p><strong>Множители сессии (Золото):</strong> Умножают ВСЁ!</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>3x Сессия (разблокируется на 250x базе) = 750 за клик</li>
+                        <li>5x Сессия = 1,250 за клик</li>
+                        <li>10x Сессия = 2,500 за клик</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;"><strong>Максимальная мощность:</strong> 1000x база × 10x сессия = <span style="color: #ffff00;">10,000 затяжек за клик!</span></p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">🤖 Анти-читы</h3>
+                    <p>Не пытайтесь обмануть систему, иначе кот взорвется! 💥</p>
+                    <p>Играйте честно и все будет хорошо. Подозрительное поведение = предупреждения → взрыв!</p>
+                    
+                    <h3 style="color: #ffff00; margin: 1.5rem 0 1rem;">💡 Советы</h3>
+                    <p>• Улучшения стоят Всего Затяжек, тратьте с умом!</p>
+                    <p>• Множители сессии для конца игры - копите!</p>
+                    <p>• Используйте Сброс, чтобы начать заново</p>
+                `
+            };
+            
+            document.getElementById('rulesContent').innerHTML = rulesContent[currentLang];
         }
 
         function updateVisuals() {
@@ -989,7 +1299,7 @@
                     updateMultiplier();
                 }
                 
-                if (savedLang && (savedLang === 'ca' || savedLang === 'en')) {
+                if (savedLang && (savedLang === 'ca' || savedLang === 'en' || savedLang === 'es' || savedLang === 'ru')) {
                     switchLanguage(savedLang);
                 }
             } catch (e) {
@@ -1082,11 +1392,14 @@
                 event.preventDefault();
             }
             
-            const message = currentLang === 'ca' 
-                ? 'Estàs segur que vols restablir TOTES les estadístiques i millores? Això no es pot desfer!'
-                : 'Are you sure you want to reset ALL stats and upgrades? This cannot be undone!';
+            const messages = {
+                ca: 'Estàs segur que vols restablir TOTES les estadístiques i millores? Això no es pot desfer!',
+                en: 'Are you sure you want to reset ALL stats and upgrades? This cannot be undone!',
+                es: '¿Estás seguro de que quieres reiniciar TODAS las estadísticas y mejoras? ¡Esto no se puede deshacer!',
+                ru: 'Вы уверены, что хотите сбросить ВСЕ статистики и улучшения? Это нельзя отменить!'
+            };
             
-            if (confirm(message)) {
+            if (confirm(messages[currentLang])) {
                 resetStats();
             }
         }
@@ -1097,6 +1410,7 @@
             totalCount = 0;
             ownedUpgrades = [];
             multiplier = 1;
+            sessionMultiplier = 1;
             gameActive = true;
             clickTimes = [];
             suspiciousClickCount = 0;
@@ -1120,11 +1434,14 @@
             document.getElementById('explosion').classList.remove('active');
             document.getElementById('gameOver').classList.remove('active');
             
-            const successMessage = currentLang === 'ca'
-                ? 'Totes les estadístiques s\'han restablert! 🔄'
-                : 'All stats reset! 🔄';
+            const successMessages = {
+                ca: 'Totes les estadístiques s\'han restablert! 🔄',
+                en: 'All stats reset! 🔄',
+                es: '¡Todas las estadísticas reiniciadas! 🔄',
+                ru: 'Все статистики сброшены! 🔄'
+            };
             
-            showMessage(successMessage);
+            showMessage(successMessages[currentLang]);
         }
 
         function checkAutoclicker() {
@@ -1167,8 +1484,9 @@
             
             if (!checkAutoclicker()) return;
             
-            sessionCount += multiplier;
-            totalCount += multiplier;
+            const totalMultiplier = multiplier * sessionMultiplier;
+            sessionCount += totalMultiplier;
+            totalCount += totalMultiplier;
             sessionDisplay.textContent = sessionCount;
             totalDisplay.textContent = totalCount;
             
@@ -1245,6 +1563,7 @@
         document.body.addEventListener('click', (e) => {
             if (!e.target.closest('.restart-btn') && 
                 !e.target.closest('.shop-btn') && 
+                !e.target.closest('.rules-btn') &&
                 !e.target.closest('.reset-btn') &&
                 !e.target.closest('.modal') &&
                 !e.target.closest('.lang-switcher')) {
