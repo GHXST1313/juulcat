@@ -183,20 +183,17 @@
         }
 
         .lang-switcher {
-            position: fixed;
-            bottom: clamp(1rem, 3vh, 2rem);
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             display: flex;
             gap: 0.5rem;
             background: rgba(255,255,255,0.2);
             padding: 0.5rem;
             border-radius: 10px;
             backdrop-filter: blur(10px);
-            z-index: 100;
             flex-wrap: wrap;
             justify-content: center;
             max-width: 90vw;
+            margin-top: 1rem;
         }
 
         .lang-btn {
@@ -705,13 +702,13 @@
         </div>
         <div class="subtitle" id="subtitle" data-ca="fes clic a qualsevol lloc per fumar el juul ⚡" data-en="click anywhere to rip the juul ⚡" data-es="haz clic en cualquier lugar para fumar el juul ⚡" data-ru="нажмите в любом месте, чтобы курить juul ⚡">click anywhere to rip the juul ⚡</div>
         <div class="warning" id="warning" data-ca="⚠️ CLICS SOSPITOSOS DETECTATS ⚠️" data-en="⚠️ SUSPICIOUS CLICKING DETECTED ⚠️" data-es="⚠️ CLICS SOSPECHOSOS DETECTADOS ⚠️" data-ru="⚠️ ОБНАРУЖЕНЫ ПОДОЗРИТЕЛЬНЫЕ КЛИКИ ⚠️">⚠️ SUSPICIOUS CLICKING DETECTED ⚠️</div>
-    </div>
-
-    <div class="lang-switcher">
-        <button class="lang-btn" data-lang="ca" onclick="switchLanguage('ca')">Català</button>
-        <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">English</button>
-        <button class="lang-btn" data-lang="es" onclick="switchLanguage('es')">Español</button>
-        <button class="lang-btn" data-lang="ru" onclick="switchLanguage('ru')">Русский</button>
+        
+        <div class="lang-switcher">
+            <button class="lang-btn" data-lang="ca" onclick="switchLanguage('ca')">Català</button>
+            <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">English</button>
+            <button class="lang-btn" data-lang="es" onclick="switchLanguage('es')">Español</button>
+            <button class="lang-btn" data-lang="ru" onclick="switchLanguage('ru')">Русский</button>
+        </div>
     </div>
 
     <div class="modal" id="shopModal">
